@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      target: development
+    container_name: air-quality-api
+    ports:
+      - '3001:3000'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - API_URL=http://api.airvisual.com/v2/nearest_city
+      - API_KEY=d10cdba9-2e77-4a3a-b249-be4f7fdcef38
+      - POSTGRES_HOST=air-quality-db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DATABASE=airquality
+      - PORT=3000
+    depends_on:
+      - db
+    command: npm run start:dev # hot reload
+    restart: unless-stopped
+
+  db:
+    image: postgres:14
+    container_name: air-quality-db
+    ports:
+      - '5335:5432'
+    environment:
+      POSTGRES_DB: airquality
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: >
+      postgres -c hba_file=/etc/postgresql/pg_hba.conf
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: air-quality-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - '5050:80'
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
