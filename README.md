@@ -53,7 +53,7 @@ Fetches the most polluted recorded timestamp for location, based on stored histo
 
 ## 🏃 How to Run the Project
 ---
-### 1. Install packages and send file
+### 1. Install packages and add env file
 ```
   install packages: npm i 
   Duplicate .env.example and rename it to be .env 
