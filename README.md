@@ -51,18 +51,12 @@ This is a NestJS-based backend service that provides real-time air quality data 
 **Description:**  
 Fetches the most polluted recorded timestamp for location, based on stored historical air quality data.
 
----
-# Please duplicate .env.example and rename it to be .env 
-
 ## 🏃 How to Run the Project
-
-### 1. Build the Docker Image (not needed now)
-### docker-compose is build to use the context direct
-
-Make sure Docker is installed and running on your machine.
-
-```bash
-  docker build -t air-quality-api .
+---
+### 1. Install packages and send file
+```
+  install packages: npm i 
+  Duplicate .env.example and rename it to be .env 
 ```
 
 ### 2. Run the App with Docker Compose
@@ -79,7 +73,7 @@ Schedule cron jobs (e.g., fetch Paris air quality every minute)
   docker-compose exec app npx mikro-orm migration:create
   docker-compose exec app npx mikro-orm migration:up
 ```
-### 4. Access the API
+### 4. Access the API & swagger will allow you to call the apis
 ```
   API: http://localhost:3001
   Swagger Docs: http://localhost:3001/docs
